@@ -45,7 +45,7 @@ public class ContactsPlugin: CAPPlugin {
                     let contacts = try Contacts.getContactFromCNContact()
 
                     for contact in contacts {
-                        print(contact)
+                        print(contact.organizationName)
                         var phoneNumbers: [PluginCallResultData] = []
                         var emails: [PluginCallResultData] = []
                         for number in contact.phoneNumbers {
