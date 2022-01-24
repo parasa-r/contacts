@@ -51,6 +51,8 @@ public class Contacts extends Plugin {
     private static final String PHONE_LABEL = "label";
     private static final String PHONE_NUMBER = "number";
     private static final String DISPLAY_NAME = "displayName";
+    private static final String GIVEN_NAME = "givenName";
+    private static final String FAMILY_NAME = "familyName";
     private static final String PHOTO_THUMBNAIL = "photoThumbnail";
     private static final String ORGANIZATION_NAME = "organizationName";
     private static final String ORGANIZATION_ROLE = "organizationRole";
@@ -126,8 +128,14 @@ public class Contacts extends Plugin {
 
                     jsContact.put(CONTACT_ID, contactId);
                     String displayName = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-
                     jsContact.put(DISPLAY_NAME, displayName);
+
+                    String given = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
+                    jsContact.put(GIVEN_NAME, given);
+
+                    String family = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+                    jsContact.put(FAMILY_NAME, family);
+
                     JSArray jsPhoneNumbers = new JSArray();
                     jsContact.put(PHONE_NUMBERS, jsPhoneNumbers);
                     JSArray jsEmailAddresses = new JSArray();

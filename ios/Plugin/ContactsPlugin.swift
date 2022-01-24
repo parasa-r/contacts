@@ -67,10 +67,12 @@ public class ContactsPlugin: CAPPlugin {
                                 "address": emailToAppend
                             ])
                         }
-
+                        let name = CNContactFormatter.string(from: contact, style: .fullName)
                         var contactResult: PluginCallResultData = [
                             "contactId": contact.identifier,
-                            "displayName": "\(contact.givenName) \(contact.familyName)",
+                            "displayName": name,
+                            "givenName" : contact.givenName,
+                            "familyName": contact.familyName,
                             "phoneNumbers": phoneNumbers,
                             "emails": emails
                         ]
