@@ -23,7 +23,6 @@ public class ContactsPlugin: CAPPlugin {
     }
 
     @objc func getPermissions(_ call: CAPPluginCall) {
-        print("checkPermission was triggered in Swift")
         Permissions.contactPermission { granted in
             switch granted {
             case true:
@@ -46,6 +45,7 @@ public class ContactsPlugin: CAPPlugin {
                     let contacts = try Contacts.getContactFromCNContact()
 
                     for contact in contacts {
+                        print(contact)
                         var phoneNumbers: [PluginCallResultData] = []
                         var emails: [PluginCallResultData] = []
                         for number in contact.phoneNumbers {
@@ -56,7 +56,6 @@ public class ContactsPlugin: CAPPlugin {
                                 "label": labelToAppend,
                                 "number": numberToAppend
                             ])
-                            print(phoneNumbers)
                         }
                         for email in contact.emailAddresses {
                             let emailToAppend = email.value as String
