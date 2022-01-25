@@ -130,7 +130,7 @@ public class Contacts extends Plugin {
                     String displayName = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                     jsContact.put(DISPLAY_NAME, displayName);
 
-                    Log.d(displayName)
+                    Log.d(displayName);
 
                     String given = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
                     jsContact.put(GIVEN_NAME, given);
