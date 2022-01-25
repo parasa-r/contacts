@@ -129,15 +129,16 @@ public class Contacts extends Plugin {
                     jsContact.put(CONTACT_ID, contactId);
                     String displayName = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                     jsContact.put(DISPLAY_NAME, displayName);
-                    print(displayName);
+
+                    Log.d(displayName)
 
                     String given = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
                     jsContact.put(GIVEN_NAME, given);
-                    print(given);
+                    Log.d(given);
 
                     String family = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
                     jsContact.put(FAMILY_NAME, family);
-                    print(family);
+                    Log.d(family);
 
                     JSArray jsPhoneNumbers = new JSArray();
                     jsContact.put(PHONE_NUMBERS, jsPhoneNumbers);
