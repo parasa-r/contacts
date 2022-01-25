@@ -102,13 +102,14 @@ public class Contacts extends Plugin {
             ContactsContract.CommonDataKinds.Contactables.TYPE,
             ContactsContract.CommonDataKinds.Contactables.LABEL
         };
-        String selection = ContactsContract.Data.MIMETYPE + " in (?, ?, ?, ?, ?)";
+        String selection = ContactsContract.Data.MIMETYPE + " in (?, ?, ?, ?, ?, ?)";
         String[] selectionArgs = new String[] {
             Email.CONTENT_ITEM_TYPE,
             Phone.CONTENT_ITEM_TYPE,
             Event.CONTENT_ITEM_TYPE,
             Organization.CONTENT_ITEM_TYPE,
-            Photo.CONTENT_ITEM_TYPE
+            Photo.CONTENT_ITEM_TYPE,
+            ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE
         };
 
         Cursor contactsCursor = contentResolver.query(ContactsContract.Data.CONTENT_URI, projection, selection, selectionArgs, null);
