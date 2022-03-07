@@ -102,14 +102,13 @@ public class Contacts extends Plugin {
             ContactsContract.CommonDataKinds.Contactables.TYPE,
             ContactsContract.CommonDataKinds.Contactables.LABEL
         };
-        String selection = ContactsContract.Data.MIMETYPE + " in (?, ?, ?, ?, ?, ?)";
+        String selection = ContactsContract.Data.MIMETYPE + " in (?, ?, ?, ?, ?)";
         String[] selectionArgs = new String[] {
             Email.CONTENT_ITEM_TYPE,
             Phone.CONTENT_ITEM_TYPE,
             Event.CONTENT_ITEM_TYPE,
             Organization.CONTENT_ITEM_TYPE,
-            Photo.CONTENT_ITEM_TYPE,
-            ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE
+            Photo.CONTENT_ITEM_TYPE
         };
 
         Cursor contactsCursor = contentResolver.query(ContactsContract.Data.CONTENT_URI, projection, selection, selectionArgs, null);
@@ -131,15 +130,31 @@ public class Contacts extends Plugin {
                     String displayName = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                     jsContact.put(DISPLAY_NAME, displayName);
 
-                    Log.d(displayName);
+                   String whereName = ContactsContract.Data.MIMETYPE + " = ? AND " + ContactsContract.CommonDataKinds.StructuredName.CONTACT_ID + " = ?";
+                    String[] whereNameParams = new String[] { ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, contactId };
+                    Cursor nameCur = contentResolver.query(ContactsContract.Data.CONTENT_URI, null, whereName, whereNameParams, ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
+                    while (nameCur.moveToNext()) {
+                        String given = nameCur.getString(nameCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
+                        String family = nameCur.getString(nameCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+                        if(given != null && given.length() > 0){
+                            jsContact.put(GIVEN_NAME, given);
+                        }
+                        if(family != null && family.length() > 0) {
+                            jsContact.put(FAMILY_NAME, family);
+                        }
+                    }
+                    nameCur.close();
 
-                    String given = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
-                    jsContact.put(GIVEN_NAME, given);
-                    Log.d(given);
-
+                   /* String given = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
                     String family = contactsCursor.getString(contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
-                    jsContact.put(FAMILY_NAME, family);
-                    Log.d(family);
+                    if(given != null && given.length() > 0){
+                        Log.d("GIVEN", given);
+                        jsContact.put(GIVEN_NAME, given);
+                    }
+                    if(family != null && family.length() > 0) {
+                        Log.d("FAMILY", family);
+                        jsContact.put(FAMILY_NAME, family);
+                    }*/
 
                     JSArray jsPhoneNumbers = new JSArray();
                     jsContact.put(PHONE_NUMBERS, jsPhoneNumbers);
