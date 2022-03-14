@@ -133,8 +133,12 @@ public class Contacts extends Plugin {
                     String given = "";
                     String family = "";
                     if(displayName.split("\\w+").length > 1){
-                        family = displayName.substring(displayName.lastIndexOf(" ") + 1);
-                        given = displayName.substring(0, displayName.lastIndexOf(' '));
+                        try {
+                            family = displayName.substring(displayName.lastIndexOf(" ") + 1);
+                            given = displayName.substring(0, displayName.lastIndexOf(' '));
+                        } catch (Exception e) {
+                            given = displayName;
+                        }
                     } else {
                         given = displayName;
                     }
